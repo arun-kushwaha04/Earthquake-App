@@ -3,8 +3,10 @@ package com.example.earthquakeapp.services
 import com.example.earthquakeapp.model.model
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface earthquakeData {
-    @GET("/query?starttime=2021-07-31&endtime=2021-08-01&minmagnitude=4.5&format=geojson")
-    fun getEarthquakeData(): Call<List<model>>
+    @GET("fdsnws/event/1/query")
+    fun getEarthquakeData(@Query("starttime") starttime:String?, @Query("endtime") endtime:String?, @Query("minmagnitude") minmagnitude: Double
+                          , @Query("format") format:String?): Call<List<model>>
 }

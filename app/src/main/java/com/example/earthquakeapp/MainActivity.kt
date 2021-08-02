@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val earthquakeDataService = serviceBuilder.buildService(earthquakeData::class.java)
-        val requestCall =  earthquakeDataService.getEarthquakeData()
+        val requestCall =  earthquakeDataService.getEarthquakeData("2021-07-31","2021-08-01",4.5,"geojson")
         requestCall.enqueue(object: Callback<List<model>> {
             override fun onResponse(call: Call<List<model>>, response: Response<List<model>>) {
                 if(response.isSuccessful){
@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MainActivity", earthquakeData.toString());
                     Toast.makeText(this@MainActivity,"data fetched", Toast.LENGTH_LONG).show()
                 }
-                else Toast.makeText(this@MainActivity,"failed here", Toast.LENGTH_LONG).show()
+                else {
+                    Toast.makeText(this@MainActivity, "failed here", Toast.LENGTH_LONG).show()
+                }
             }
 
             override fun onFailure(call: Call<List<model>>, t: Throwable) {
