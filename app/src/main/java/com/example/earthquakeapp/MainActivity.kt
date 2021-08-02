@@ -24,17 +24,14 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<model>>, response: Response<List<model>>) {
                 if(response.isSuccessful){
                     val earthquakeData:List<model> = response.body()!!
-                    Log.d("MainActivity", earthquakeData.toString());
-                    Toast.makeText(this@MainActivity,"data fetched", Toast.LENGTH_LONG).show()
                 }
                 else {
-                    Toast.makeText(this@MainActivity, "failed here", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "Failed to Get Data Check Internet Connectivity", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onFailure(call: Call<List<model>>, t: Throwable) {
-                Log.d("MainActivity", "Error Occurred");
-                Toast.makeText(this@MainActivity,"failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity,"Failed to Get Data Check Internet Connectivity", Toast.LENGTH_LONG).show()
             }
 
         })
