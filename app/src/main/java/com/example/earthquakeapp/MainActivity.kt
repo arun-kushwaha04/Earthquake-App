@@ -16,6 +16,7 @@ import com.example.earthquakeapp.services.serviceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -24,7 +25,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var dateView: TextView
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,27 +33,24 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        var startDateSelector = binding.startDateValue;
-        var endDateSelector = binding.endDateValue;
-        var datePickerLayout = binding.datePickerLayout;
-        var datePicker = binding.datePicker;
-        var closeDatePicker = binding.closeDatePicker;
-        var startDate = binding.startDateValue;
-        var endDate = binding.endDateValue;
+        val startDateSelector = binding.startDateValue
+        val endDateSelector = binding.endDateValue
+        val datePickerLayout = binding.datePickerLayout
+        val datePicker = binding.datePicker
+        val closeDatePicker = binding.closeDatePicker
+        val startDate = binding.startDateValue
+        val endDate = binding.endDateValue
         val currentDateTime = LocalDateTime.now()
 
         startDate.text = currentDateTime.format(DateTimeFormatter.ISO_DATE)
         endDate.text = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+        val format = SimpleDateFormat("yyyy-MM-dd");
+        val date = format.parse(currentDateTime.format(DateTimeFormatter.ISO_DATE))
 
 
 
         startDateSelector.setOnClickListener(){
             datePickerLayout.visibility= View.VISIBLE
-//            var date:String="";
-//            date+=(datePicker.year);date+='-';
-//            date+=(datePicker.month+1);date+='-';
-//            date+=(datePicker.dayOfMonth);
-//            startDate.text=date;
             dateView=startDate;
         }
         endDateSelector.setOnClickListener(){
@@ -62,6 +60,15 @@ class MainActivity : AppCompatActivity() {
 
 
         closeDatePicker.setOnClickListener(){
+            val currDate = format.parse(dateView.text.toString())!!
+            if( currDate > date){
+                dateView.text=date?.toString();
+            }
+            val date1= format.parse(startDate.text.toString())!!
+            val date2= format.parse(endDate.text.toString())!!
+            if(date1>date2){
+                startDate.text=endDate.text;
+            }
             datePickerLayout.visibility= View.GONE
         }
 
@@ -70,13 +77,18 @@ class MainActivity : AppCompatActivity() {
             today.get(Calendar.DAY_OF_MONTH))
         { _, year, months, day ->
             val month = months + 1
-            if(currentDateTime.year >= year && currentDateTime.monthValue >= months && currentDateTime.dayOfMonth >= day)
-            dateView.text="${year}-${month}-${day}"
-            else dateView.text = currentDateTime.format(DateTimeFormatter.ISO_DATE)
+            if (month < 10 && day < 10) {
+                dateView.text = "${year}-0${month}-0${day}"
+            }
+            else if (month < 10 && day >= 10) {
+                dateView.text = "${year}-0${month}-${day}"
+            }
+            else if (month >= 10 && day < 10) {
+                dateView.text = "${year}-${month}-0${day}"
+            } else {
+                dateView.text = "${year}-${month}-${day}"
+            }          
         }
-
-
-
 
         val earthquakeDataService = serviceBuilder.buildService(earthquakeData::class.java)
         val requestCall =
