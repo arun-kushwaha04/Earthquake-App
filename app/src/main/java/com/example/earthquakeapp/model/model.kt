@@ -3,10 +3,11 @@ package com.example.earthquakeapp.model
 import java.lang.reflect.Array
 
 
-data class model (
+data class Model (
     val type:String,
     val metaData: Metadata,
-    val features: ArrayList<Features>
+    val features: ArrayList<Features>,
+    val bbox: Array
         )
 
 data class Metadata(

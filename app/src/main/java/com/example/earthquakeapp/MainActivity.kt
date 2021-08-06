@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.example.earthquakeapp.databinding.ActivityMainBinding
-import com.example.earthquakeapp.model.model
+import com.example.earthquakeapp.model.Model
 import com.example.earthquakeapp.services.earthquakeData
 import com.example.earthquakeapp.services.serviceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.InvocationTargetException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         closeDatePicker.setOnClickListener(){
             val currDate = format.parse(dateView.text.toString())!!
             if( currDate > date){
-                dateView.text=date?.toString();
+                dateView.text=currentDateTime.format(DateTimeFormatter.ISO_DATE)
             }
             val date1= format.parse(startDate.text.toString())!!
             val date2= format.parse(endDate.text.toString())!!
@@ -87,16 +88,16 @@ class MainActivity : AppCompatActivity() {
                 dateView.text = "${year}-${month}-0${day}"
             } else {
                 dateView.text = "${year}-${month}-${day}"
-            }          
+            }
         }
 
         val earthquakeDataService = serviceBuilder.buildService(earthquakeData::class.java)
         val requestCall =
             earthquakeDataService.getEarthquakeData("2021-07-31", "2021-08-01", 4.5, "geojson")
-        requestCall.enqueue(object : Callback<List<model>> {
-            override fun onResponse(call: Call<List<model>>, response: Response<List<model>>) {
+        requestCall.enqueue(object : Callback<List<Model>> {
+            override fun onResponse(call: Call<List<Model>>, response: Response<List<Model>>) {
                 if (response.isSuccessful) {
-                    val earthquakeData: List<model> = response.body()!!
+                    val earthquakeData: List<Model> = response.body()!!
                 } else {
                     Toast.makeText(
                         this@MainActivity,
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<model>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Model>>, t: Throwable) {
                 Toast.makeText(
                     this@MainActivity,
                     "Failed to Get Data Check Internet Connectivity2",
