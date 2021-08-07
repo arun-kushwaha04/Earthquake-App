@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface earthquakeData {
     @GET("fdsnws/event/1/query")
     fun getEarthquakeData(@Query("starttime") starttime:String?, @Query("endtime") endtime:String?, @Query("minmagnitude") minmagnitude: Double
-                          , @Query("format") format:String?): Call<List<Model>>
+                          , @Query("format") format:String?): Call<Model>
 }

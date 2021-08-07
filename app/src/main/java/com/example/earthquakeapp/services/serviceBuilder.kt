@@ -11,7 +11,7 @@ object serviceBuilder {
     private val logger = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.apply {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
         }
     };
     private val okHttp = OkHttpClient.Builder().addInterceptor(logger);

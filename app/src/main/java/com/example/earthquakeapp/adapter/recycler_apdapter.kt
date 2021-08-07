@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earthquakeapp.R
+import com.example.earthquakeapp.model.Features
 import com.example.earthquakeapp.model.Properties
 import java.text.SimpleDateFormat
 import java.util.*
 
 class recycler_apdapter(
     private val context: Context?,
-    private val list: List<Properties>
+    private val list: ArrayList<Features>
 ) : RecyclerView.Adapter<recycler_apdapter.ImageViewHolder>(){
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun convertDate(timeInMilliseconds: Long, dateFormat: String?): String? {
@@ -29,8 +30,9 @@ class recycler_apdapter(
         val time:TextView = itemView.findViewById(R.id.time)
         fun bindView(data:Properties){
             mag.text = data.mag
-            location1.text=data.place.split("of")[0]
-            location2.text=data.place.split("of")[1]
+            var temp = data.place.split("of")
+            location1.text=temp[0]
+            location2.text=temp[1].drop(1)
             date.text=convertDate(data.time,"yyyy-MM-dd")
             time.text=convertDate(data.time,"hh:mm:ss")
         }
@@ -43,7 +45,7 @@ class recycler_apdapter(
 
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.bindView(list[position])
+        if(list[position].properties.place.split("of").size >= 2)holder.bindView(list[position].properties)
     }
 
     override fun getItemCount(): Int {

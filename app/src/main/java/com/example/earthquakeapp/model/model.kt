@@ -7,7 +7,7 @@ data class Model (
     val type:String,
     val metaData: Metadata,
     val features: ArrayList<Features>,
-    val bbox: Array
+    val bbox: ArrayList<Float>
         )
 
 data class Metadata(
@@ -27,7 +27,7 @@ data class Features (
     val id:String
 
         )
-data class  Properties(
+data class Properties(
     val mag:String,
     val place:String,
     val time:Long,
@@ -40,7 +40,7 @@ data class  Properties(
     val mni:Float,
     val alert:String,
     val status: String,
-    val tsunami:Boolean,
+    val tsunami:Int,
     val sig:Int,
     val net:String,
     val code:String,
@@ -57,6 +57,6 @@ data class  Properties(
 )
 data class Geometry(
     val type: String,
-    val coordinates:Array,
+    val coordinates:ArrayList<Float>,
 )
 

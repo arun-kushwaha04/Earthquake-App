@@ -91,31 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val earthquakeDataService = serviceBuilder.buildService(earthquakeData::class.java)
-        val requestCall =
-            earthquakeDataService.getEarthquakeData("2021-07-31", "2021-08-01", 4.5, "geojson")
-        requestCall.enqueue(object : Callback<List<Model>> {
-            override fun onResponse(call: Call<List<Model>>, response: Response<List<Model>>) {
-                if (response.isSuccessful) {
-                    val earthquakeData: List<Model> = response.body()!!
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Failed to Get Data Check Internet Connectivity",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
 
-            override fun onFailure(call: Call<List<Model>>, t: Throwable) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Failed to Get Data Check Internet Connectivity2",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-        })
 
         val languages = resources.getStringArray(R.array.Languages)
         val spinner = findViewById<Spinner>(R.id.minMagValue)
