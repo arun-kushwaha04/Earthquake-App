@@ -30,8 +30,8 @@ data class Features (
 data class  Properties(
     val mag:String,
     val place:String,
-    val time:Int,
-    val updated:Int,
+    val time:Long,
+    val updated:Long,
     val tz:String,
     val url:String,
     val detail: String,
