@@ -1,5 +1,6 @@
 package com.example.earthquakeapp.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,8 @@ class recycler_apdapter(
     private val list: ArrayList<Features>
 ) : RecyclerView.Adapter<recycler_apdapter.ImageViewHolder>(){
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        fun convertDate(timeInMilliseconds: Long, dateFormat: String?): String? {
+        @SuppressLint("SimpleDateFormat")
+        private fun convertDate(timeInMilliseconds: Long, dateFormat: String?): String? {
             val dateObject = Date(timeInMilliseconds)
             val dateFormatter = SimpleDateFormat(dateFormat)
             return dateFormatter.format(dateObject)
@@ -25,16 +27,16 @@ class recycler_apdapter(
 
         private val mag:TextView = itemView.findViewById(R.id.earthquake_mag)
         private val location1:TextView = itemView.findViewById(R.id.location_1)
-        val location2:TextView = itemView.findViewById(R.id.location_2)
-        val date:TextView = itemView.findViewById(R.id.date)
-        val time:TextView = itemView.findViewById(R.id.time)
+        private val location2:TextView = itemView.findViewById(R.id.location_2)
+        private val date:TextView = itemView.findViewById(R.id.date)
+        private val time:TextView = itemView.findViewById(R.id.time)
         fun bindView(data:Properties){
             mag.text = data.mag
-            var temp = data.place.split("of")
+            val temp = data.place.split("of")
             location1.text=temp[0]
             location2.text=temp[1].drop(1)
             date.text=convertDate(data.time,"yyyy-MM-dd")
-            time.text=convertDate(data.time,"hh:mm:ss")
+            time.text=convertDate(data.time,"hh:mm")
         }
     }
 
