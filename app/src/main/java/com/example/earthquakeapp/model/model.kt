@@ -50,7 +50,7 @@ data class Properties(
     val nst:Int,
     val dmin:Float,
     val rms:Float,
-    val gap:Int,
+    val gap:Float,
     val magType:String,
     val type:String,
     val title:String,

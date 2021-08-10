@@ -6,6 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <LinearLayout
+        android:id="@+id/error"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Internet Connection"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        />
+        <TextView
+        android:text="Please Check Internet Connection, Then Reopen the App"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/noError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -18,9 +60,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
-
-
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -30,7 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
-
         <TextView
             android:id="@+id/startDate"
             android:layout_width="wrap_content"
@@ -38,7 +76,6 @@
             android:text="Start Date - "
             android:textColor="@color/black"
             android:textSize="24sp" />
-
         <TextView
             android:id="@+id/startDateValue"
             android:layout_width="0dp"
@@ -63,7 +100,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
         <TextView
             android:id="@+id/endDate"
             android:layout_width="wrap_content"
@@ -71,7 +107,6 @@
             android:text="End Date - "
             android:textColor="@color/black"
             android:textSize="24sp" />
-
         <TextView
             android:id="@+id/endDateValue"
             android:layout_width="0dp"
@@ -86,34 +121,6 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <TextView
-            android:id="@+id/minMag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Minimum Magnitude - "
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-
-        <Spinner
-            android:id="@+id/minMagValue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:padding="16dp"
-            android:textSize="32sp" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/fetch_earthquake_data"
         android:layout_width="wrap_content"
@@ -125,6 +132,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        <TextView
+            android:id="@+id/minMag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minimum Magnitude - "
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+        <Spinner
+            android:id="@+id/minMagValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:textSize="32sp" />
+    </LinearLayout>
+
+
     <RelativeLayout
         android:id="@+id/datePickerLayout"
         android:layout_width="match_parent"
@@ -136,7 +170,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <DatePicker
             android:id="@+id/datePicker"
             android:layout_width="wrap_content"
@@ -154,8 +187,5 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"/>
     </RelativeLayout>
-
-
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,7 +72,7 @@ class DataActivity : AppCompatActivity(){
             override fun onFailure(call: Call<Model>, t: Throwable) {
                 Toast.makeText(
                     this@DataActivity,
-                    "Failed to Get Data Check Internet Connectivity2",
+                    "Failed to Get Data Check Internet Connectivity",
                     Toast.LENGTH_LONG
                 ).show()
                 Log.d("DataActivity", t.toString())

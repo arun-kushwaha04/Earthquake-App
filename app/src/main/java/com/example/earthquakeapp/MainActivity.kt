@@ -2,7 +2,10 @@ package com.example.earthquakeapp
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.isInvisible
 import com.example.earthquakeapp.databinding.ActivityMainBinding
 import com.example.earthquakeapp.model.Model
 import com.example.earthquakeapp.services.earthquakeData
@@ -37,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        if(!isNetworkConnected()){
+            binding.error.visibility=View.VISIBLE
+            binding.noError.visibility=View.GONE
+        }
+
         val startDateSelector = binding.startDateValue
         val endDateSelector = binding.endDateValue
         val datePickerLayout = binding.datePickerLayout
@@ -50,18 +59,18 @@ class MainActivity : AppCompatActivity() {
         endDate.text = currentDateTime.format(DateTimeFormatter.ISO_DATE)
         val format = SimpleDateFormat("yyyy-MM-dd");
         val date = format.parse(currentDateTime.format(DateTimeFormatter.ISO_DATE))
-
-
+        val fetchButton = binding.fetchEarthquakeData
 
         startDateSelector.setOnClickListener(){
             datePickerLayout.visibility= View.VISIBLE
+            fetchButton.visibility=View.GONE
             dateView=startDate;
         }
         endDateSelector.setOnClickListener(){
             datePickerLayout.visibility= View.VISIBLE;
+            fetchButton.visibility=View.GONE
             dateView=endDate;
         }
-
 
         closeDatePicker.setOnClickListener(){
             val currDate = format.parse(dateView.text.toString())!!
@@ -74,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 startDate.text=endDate.text;
             }
             datePickerLayout.visibility= View.GONE
+            fetchButton.visibility=View.VISIBLE
         }
 
         val today = Calendar.getInstance()
@@ -94,7 +104,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val fetchButton = binding.fetchEarthquakeData
         fetchButton.setOnClickListener(){
             val date1 = startDate.text
             val date2 = endDate.text
@@ -115,6 +124,18 @@ class MainActivity : AppCompatActivity() {
             )
             spinner.adapter = adapter
         }
+    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun isNetworkConnected(): Boolean {
+        //1
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //2
+        val activeNetwork = connectivityManager.activeNetwork
+        //3
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+        //4
+        return networkCapabilities != null &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
 }
