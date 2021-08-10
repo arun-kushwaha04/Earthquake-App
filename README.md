@@ -1,6 +1,6 @@
 # Earthquake-App
 
-This App sisplays Earthquake data fetched from [USGS](https://earthquake.usgs.gov/fdsnws/event/1/) api. User have to select the start date and the end date ,then click on fetch date then the app will show all the earthquake occured between those dates.
+This App displays Earthquake data fetched from [USGS](https://earthquake.usgs.gov/fdsnws/event/1/) api. User have to select the start date and the end date ,then click on fetch date then the app will show all the earthquake occured between those dates.
 
 Internet Connection is required for the app to function properly.
 <br><br>
