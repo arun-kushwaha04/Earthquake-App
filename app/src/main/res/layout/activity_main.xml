@@ -87,6 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -110,7 +111,6 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:padding="16dp"
-
             android:textSize="32sp" />
     </LinearLayout>
 
@@ -143,6 +143,18 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"/>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/fetch_earthquake_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Fetch Data"
+        android:textSize="16sp"
+        android:background="@drawable/button_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 
 

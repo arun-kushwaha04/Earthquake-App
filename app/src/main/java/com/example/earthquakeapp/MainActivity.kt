@@ -2,9 +2,11 @@ package com.example.earthquakeapp
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -13,6 +15,7 @@ import com.example.earthquakeapp.databinding.ActivityMainBinding
 import com.example.earthquakeapp.model.Model
 import com.example.earthquakeapp.services.earthquakeData
 import com.example.earthquakeapp.services.serviceBuilder
+import okhttp3.internal.waitMillis
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -91,7 +94,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
+        val fetchButton = binding.fetchEarthquakeData
+        fetchButton.setOnClickListener(){
+            val date1 = startDate.text
+            val date2 = endDate.text
+            val magnitude = binding.minMagValue.selectedItem.toString()
+            val intent = Intent(this,DataActivity::class.java)
+            intent.putExtra("date1",date1)
+            intent.putExtra("date2",date2)
+            intent.putExtra("magnitude",magnitude)
+            startActivity(intent)
+        }
 
         val languages = resources.getStringArray(R.array.Languages)
         val spinner = findViewById<Spinner>(R.id.minMagValue)

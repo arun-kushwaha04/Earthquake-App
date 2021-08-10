@@ -15,7 +15,7 @@ import java.util.*
 
 class recycler_apdapter(
     private val context: Context?,
-    private val list: ArrayList<Features>
+    private val list: List<Features>
 ) : RecyclerView.Adapter<recycler_apdapter.ImageViewHolder>(){
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view){
         @SuppressLint("SimpleDateFormat")
@@ -24,7 +24,6 @@ class recycler_apdapter(
             val dateFormatter = SimpleDateFormat(dateFormat)
             return dateFormatter.format(dateObject)
         }
-
         private val mag:TextView = itemView.findViewById(R.id.earthquake_mag)
         private val location1:TextView = itemView.findViewById(R.id.location_1)
         private val location2:TextView = itemView.findViewById(R.id.location_2)
@@ -39,20 +38,16 @@ class recycler_apdapter(
             time.text=convertDate(data.time,"hh:mm")
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder =
         ImageViewHolder(
             LayoutInflater.from(context).inflate(R.layout.recyler_card_view,parent,false)
         )
-
-
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        if(list[position].properties.place.split("of").size >= 2)holder.bindView(list[position].properties)
-    }
 
+            holder.bindView(list[position].properties)
+
+    }
     override fun getItemCount(): Int {
         return list.size
     }
-
-
 }

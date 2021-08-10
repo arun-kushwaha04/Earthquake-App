@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,28 +19,46 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DataActivity : AppCompatActivity(){
-    private lateinit var data: ArrayList<Features>
+    private lateinit var data: List<Features>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data)
 
+        val date1=intent.getStringExtra("date1").toString()
+        val date2=intent.getStringExtra("date2").toString()
+        val magnitude = intent.getStringExtra("magnitude")!!.toDouble()
+        Log.d("MainActivity", date1)
+        Log.d("MainActivity", date2)
+        Log.d("MainActivity", magnitude.toString())
         val recyclerview = findViewById<RecyclerView>(R.id.recycler_view_data)
         val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+        val message = findViewById<TextView>(R.id.noDataMessage)
 
         val earthquakeDataService = serviceBuilder.buildService(earthquakeData::class.java)
         val requestCall =
-            earthquakeDataService.getEarthquakeData("2021-07-31", "2021-08-01", 4.5, "geojson")
+            earthquakeDataService.getEarthquakeData(date1, date2, magnitude, "geojson")
         requestCall.enqueue(object : Callback<Model> {
             override fun onResponse(call: Call<Model>, response: Response<Model>) {
                 if (response.isSuccessful) {
-                    val earthquakeData:Model = response.body()!!
-                    data=earthquakeData.features;
-                    var recyclerView = recyclerview
-                    recyclerView.layoutManager = LinearLayoutManager(this@DataActivity)
-                    recyclerView.layoutManager =
-                        LinearLayoutManager(this@DataActivity, LinearLayoutManager.VERTICAL, false)
-                    recyclerView.adapter = recycler_apdapter(this@DataActivity ,data);
-                    progressBar.visibility = View.GONE
+                    val earthquakeData: Model = response.body()!!
+                    val temp = earthquakeData.features;
+                    data = temp.filter{
+                        it.properties.place!=null && it.properties.place.split("of").size >= 2
+                    }
+                   if( data.isNotEmpty()) {
+                       recyclerview.layoutManager = LinearLayoutManager(this@DataActivity)
+                       recyclerview.layoutManager =
+                           LinearLayoutManager(
+                               this@DataActivity,
+                               LinearLayoutManager.VERTICAL,
+                               false
+                           )
+                       recyclerview.adapter = recycler_apdapter(this@DataActivity, data);
+                   }
+                    else{
+                        message.visibility=View.VISIBLE
+                   }
+                       progressBar.visibility = View.GONE
                 } else {
                     Toast.makeText(
                         this@DataActivity,
